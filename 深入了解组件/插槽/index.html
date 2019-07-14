@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav-link{
+            color:red;
+            text-decoration: none;
+        }
+        .button{
+            color:azure;
+            background: blue;
+            border-radius:2px;
+            border:1px solid black;
+        }
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <navigation-link url="https://www.baidu.com">
+            <span>baidu</span>
+            <span>Logged {{user.name}}</span>
+            <br>
+        </navigation-link>
+        <navigation-link url="https://www.tencent.com">
+            <span>tencent</span>
+        </navigation-link>
+        <br>
+        <submit-button>Save</submit-button>
+        <submit-button></submit-button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'navigationLink':{
+                    props:{
+                        url:String
+                    },
+                    template:`
+                        <a :href="url" class="nav-link" target="blank">
+                            <slot></slot>
+                        </a>
+                        `
+                },
+                'submitButton':{
+                    props:{},
+                    template:`
+                        <button type="submit" class="button">
+                            <slot>Submit</slot>
+                        </button>
+                    `
+                }
+            },
+            data:{
+                user:{
+                    name:'Robbin'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

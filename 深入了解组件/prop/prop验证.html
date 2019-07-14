@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+       <my-component :prop-a="56" prop-b="22" prop-c="Bob" prop-f="danger" :prop-g="person1"></my-component>
+    </div>
+    <script>
+        var Person=function (firstName,lastName){
+            this.firstName=firstName
+            this.lastName=lastName
+        }
+        var person1=new Person("li","lei");
+        var person2={firstName:"zhang",lastName:"mei"};
+        Vue.component('my-component',{
+            props:{
+                propA:Number,
+                propB:[String,Number],
+                propC:{
+                    type:String,
+                    required:true
+                },
+                propD:{
+                    type:Number,
+                    default:120
+                },
+                propE:{
+                    type:Object,
+                    default:function(){
+                        return {message:'Nice'}
+                    }
+                },
+                propF:{
+                    type:String,
+                    validator:function(value){
+                        return ['success','warning','danger'].indexOf(value)!==-1;
+                    }
+                },
+                propG:Person,
+            },
+            template:`
+                <div>
+                <p style="color:red">propA:{{propA}}</p>
+                <p style="color:blue">propB:{{propB}}</p>
+                <p style="color:green">propC:{{propC}}</p>
+                <p style="color:#000380">propD:{{propD}}</p>
+                <p style="color:#6d0080">propE:{{propE}}--{{propE.message}}</p>
+                <p style="color:rgb(0,128,99)">propF:{{propF}}</p>
+                </div>
+            `
+        })
+        new Vue({
+            el:'#demo',
+            data:{
+                person1
+            }
+        })
+    </script>
+</body>
+</html>

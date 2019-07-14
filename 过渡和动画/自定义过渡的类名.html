@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <button @click="show=!show">
+            Toggle render
+        </button>
+        <transition enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+            <p v-if="show">hello</p>
+        </transition>
+        <!-- 显示定义过渡时间 -->
+        <transition :duration="5000">
+            <p v-if="show">My world</p>
+        </transition>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            data:{
+                show:true,
+            }
+        })
+    </script>
+</body>
+</html>

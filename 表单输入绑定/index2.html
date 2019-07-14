@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="example-6">
+        <select v-model="selected" multiple>
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option> 
+        </select>
+        <span>Selected:{{selected}}</span>
+    </div>
+    <div id="example-7">
+        <select v-model="selected">
+            <option v-for="option in options" :value="option.value">{{option.text}}</option>
+        </select>
+        <span>Selected:{{selected}}</span>
+    </div>
+    <div id="example-8">
+        <input type="radio" v-model="picked" value='a' ><span>picked:{{picked}}</span><br>
+        <input type="checkbox" v-model="toggle" ><span>toggle:{{toggle}}</span><br>
+        <select name="" id="" v-model="selected" >
+            <option value="abc">ABC</option>
+            <option value="df">df</option>
+            <option value="lol">LOL</option>
+        </select>
+        <span>selected:{{selected}}</span><br>
+
+        <input type="checkbox" v-model="toggle2" true-value="yes" false-value="no"><span>toggle2:{{toggle2}}</span><br>
+        <input type="radio" v-model="pick2" :value="a"><span>pick2:{{pick2}}</span><br>
+        <select v-model="selected2">
+            <option :value="{number:456}">123</option>
+        </select>
+        <span>selected2:{{selected2}}</span><br>
+
+        <input type="number" v-model.number="age">
+        <span>age:{{age}}</span><br>
+
+        <input type="text" v-model.trim="name">
+        <span>name:{{name}}</span><br>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#example-6",
+            data:{
+                selected:[]
+            }
+        })
+        var vm2=new Vue({
+            el:"#example-7",
+            data:{
+                selected:'B',
+                options:[
+                    {text:'One',value:'A'},
+                    {text:'Two',value:'B'},
+                    {text:'Three',value:'C'},
+                ]
+            }
+        })
+        var vm3=new Vue({
+            el:'#example-8',
+            data:{
+                picked:'',
+                toggle:true,
+                selected:'abc',
+                toggle2:true,
+                pick2:'',
+                a:12345,
+                selected2:'',
+                number:789,
+                age:'',
+                name:''
+            }
+
+        })
+    </script>
+</body>
+</html>

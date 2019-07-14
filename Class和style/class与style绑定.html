@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="example">
+        <div class="static" :class="{active:isActive,'text-danger':hasError}">one</div>
+        <div :class="classObject">two</div>
+        <div :class="classObject2">three</div>
+
+        <div :class="[activeClass,errorClass]">arr</div>
+        <div :class="[isActive?activeClass:'',errorClass]">arr-two</div>
+        <div :class="[{active:isActive},errorClass]">arr-three</div>
+
+        <my-component class="baz boo"></my-component>
+        <my-component :class="{active:isActive}"></my-component>
+
+        <div :style="{color:activeColor,fontSize:fontSize+'px'}">Hello</div>
+        <div :style="styleObject">styleObject</div>
+        <div :style="[baseStyles,overridingStyles]">Hi,Jack</div>
+        <div :style="{display:['-webkit-box','-ms-flexbox','flex']}">Hello</div>
+    </div>
+    
+    <script>
+        Vue.component('my-component',{
+            template:'<p class="foo bar">Hi</p>'
+        })
+        var vm=new Vue({
+            el:'#example',
+            data:{
+                isActive:true,
+                hasError:true,
+                classObject:{
+                    active:true,
+                    'text-danger':true
+                },
+                error:{
+                    type:'fatal'
+                },
+                activeClass:'active',
+                errorClass:'text-danger',
+                activeColor:'red',
+                fontSize:20,
+                styleObject:{
+                    color:'blue',
+                    fontSize:'13px'
+                },
+                baseStyles:{
+                    color:'red',
+                    fontSize:'22px'
+                },
+                overridingStyles:{
+                    color:'green',
+                    fontWeight:'bold',
+                    fontStyle:'italic'
+                }
+            },
+            computed:{
+                classObject2:function(){
+                    return {
+                        active:this.isActive&&!this.error,
+                        'text-danger':this.error&&this.error.type==='fatal'
+                    }
+                }
+            }
+        });
+        
+    </script>
+</body>
+</html>

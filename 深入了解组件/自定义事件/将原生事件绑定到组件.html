@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active{
+            border:1px solid red
+        }
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <base-input 
+            required 
+            placeholder="enter your name" 
+            v-model="user.name" 
+            :label="user.title"
+            @focus="onFocus"
+            :toggle="toggle"
+            @blur="onBlur"
+        ></base-input>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'baseInput':{
+                    props:{
+                        label:String,
+                        value:[String,Number],
+                        toggle:Boolean
+                    },
+                    inheritAttrs:false,
+                    data:function(){
+                        return {
+                            a:'shenzhen'
+                        }
+                    },
+                    computed:{
+                        // 在一个组件的根元素上直接监听一个原生事件
+                        Listeners:function(){
+                            var vm=this;
+                            return Object.assign(
+                                {},
+                                vm.$listeners,
+                                {
+                                    input:function(event){
+                                        vm.$emit('input',event.target.value)
+                                    }
+                                }
+                            )
+                        }
+                    },
+                    methods:{
+                        judgeThis:function(){
+                            console.log(this.$listeners);
+                        }
+                    },
+                    template:`<label>
+                                <p style="color:blue" @click="judgeThis">label:{{label}}</p>
+                                <input v-bind="$attrs" :value="value" :class="{active:toggle}"
+                                v-on="Listeners"
+                                >
+                              </label>
+                            `
+                }
+            },
+            data:{
+                user:{
+                    name:'pony',
+                    age:28,
+                    title:'light'
+                },
+                toggle:false
+            },
+            methods:{
+                onFocus:function(){
+                    this.toggle=true
+                },
+                onBlur:function(){
+                    this.toggle=false
+                }
+            }
+        })
+    </script>
+</body>
+</html>

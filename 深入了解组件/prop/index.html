@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <blog-post 
+            post-title="hello!" 
+            :title="post.title" 
+            :love="post.title+' by '+post.author.name" 
+            :likes="42" 
+            :is-published="post.isPublished"
+            :comment-ids="[234,266,273]"
+            :author="{name:'Veronica',company:'Veridian Dynamics'}"
+        ></blog-post>
+        <p>--------</p>
+        <blog-post v-bind="post"></blog-post>
+    </div>
+    <script>
+        Vue.component('blog-post',{
+            // props:['postTitle','title','love','likes','isPublished'],
+            props:{
+                postTitle:String,
+                title:String,
+                love:String,
+                likes:Number,
+                isPublished:Boolean,
+                commentIds:Array,
+                author:Object,
+            },
+            data:function(){
+                return {
+                    counter:this.likes+8,
+                }
+            },
+            computed:{
+                normalizeSize:function(){
+                    return this.author.name.toLowerCase();
+                }
+            },
+            template:`<div>
+            <h3>{{postTitle}}</h3>
+            <p style="color:blue">{{title}}</p>
+            <p style="color:red">{{love}}</p>
+            <p style="color:green">{{likes}}</p>
+            <p>{{isPublished}}</p>
+            <p>{{commentIds}}</p>
+            <p>{{author}} author.name: {{author.name}}</p>
+            <p style="color:#e600ff">counter:{{counter}}</p>
+            <p>normalizeSize:{{normalizeSize}}</p>
+            </div>
+            `
+        })
+        new Vue({
+            el:'#demo',
+            data:{
+                post:{
+                    title:'Harry Potter',
+                    author:{
+                        name:'Jack',
+                        age:29
+                    },
+                    isPublished:false,
+                    likes:15
+                }     
+            }
+        })
+    </script>
+</body>
+</html>

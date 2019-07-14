@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <todo-list>
+            <template v-slot:todo="{todo}">
+                <span v-if="todo.isComplete">√</span>{{todo.text}}
+            </template>
+        </todo-list>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'todoList':{
+                    data:function(){
+                        return {
+                            filteredTodos:[
+                                    {
+                                        id:'1',
+                                        text:'eat',
+                                        isComplete:true
+                                    },
+                                    {
+                                        id:'2',
+                                        text:'drink',
+                                        isComplete:false
+                                    },
+                                    {
+                                        id:'3',
+                                        text:'sleep',
+                                        isComplete:true
+                                    }
+                            ] 
+                        }
+                    },
+                    template:`
+                    <ul>
+                        <li v-for="todo in filteredTodos" :key="todo.id">
+                            <slot :todo="todo" name="todo">
+                                {{todo.text}}
+                            </slot>
+                        </li>
+                    </ul>
+                    `
+                }    
+            },
+            data:{
+               
+            }
+        })
+    </script>
+</body>
+</html>

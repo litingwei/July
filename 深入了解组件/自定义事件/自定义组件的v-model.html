@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <my-component @my-event="dosomething($event)" :n="num"></my-component>
+        <base-input required placeholder="please enter your name" :value="user" @input="user=$event"></base-input>
+        <base-input v-model="user"></base-input>
+        <base-checkbox :checked="lovingVue" @change="lovingVue=$event"></base-checkbox>
+        <base-checkbox v-model="lovingVue"></base-checkbox>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'myComponent':{
+                    props:['n'],
+                    template:`
+                        <p style="color:red" @click="$emit('my-event',n)">my component {{n}}</p>
+                    `
+                },
+                'baseInput':{
+                    props:['value'],
+                    data:function(){
+                        return {
+                            username:'Alice'
+                        }
+                    },
+                    inheritAttrs:false,
+                    template:`<div>
+                         <input :value="value" v-bind="$attrs" @input="$emit('input',$event.target.value)">
+                         <p>--{{username}}</p>
+                         <p>--{{value}}</p>
+                        </div>
+                    `
+                },
+                'baseCheckbox':{
+                    props:{
+                        checked:Boolean
+                    },
+                    model:{
+                        prop:'checked',
+                        event:'change'
+                    },
+                    template:`<input type="checkbox" :checked="checked" @change="$emit('change',$event.target.checked)">`
+                }
+            },
+            data:{
+                num:12,
+                user:'Tom',
+                lovingVue:true
+            },
+            methods:{
+                dosomething:function(value){
+                    console.log(value);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

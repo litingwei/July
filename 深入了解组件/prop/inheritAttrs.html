@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <base-input :label="label" :value="value" @input="value=$event" required placeholder="Enter your name"></base-input>
+    </div>
+    <script>
+        Vue.component('base-input',{
+            props:['label','value'],
+            // 手动决定组件特性会被赋予哪个元素
+            inheritAttrs:false,
+            template:`
+                <label>
+                    {{label}}
+                    <input :value="value" @input="$emit('input',$event.target.value)" v-bind="$attrs">
+                </label>
+            `
+        })
+        var vm=new Vue({
+            el:'#demo',
+            data:{
+                label:'jack',
+                value:"please input"
+            }
+        })
+    </script>
+</body>
+</html>

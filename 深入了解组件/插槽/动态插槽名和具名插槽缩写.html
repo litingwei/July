@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <base-layout>
+            <template v-slot:header1>
+                <h1>Here might be a page title</h1>
+            </template>
+
+            <template v-slot:default>
+                <p>A paragraph for the main content.</p>
+                <p>And another one.</p>
+            </template>
+            
+            <template v-slot:footer1>
+                <p>Here's some contact info</p>
+            </template>
+        </base-layout> 
+        <!-- 动态插槽名，需要留意浏览器会把特性名全部强制转为小写 -->
+        <base-layout>
+            <template v-slot:[dynamicSlotName]>
+                <p>This is a dynamic slot name</p>
+            </template>
+        </base-layout>
+
+        <base-layout>
+            <template #header1>
+                <h1>Here might be a page title</h1>
+            </template>
+
+            <template #default>
+                <p>A paragraph for the main content.</p>
+                <p>And another one.</p>
+            </template>
+            
+            <template #footer1>
+                <p>Here's some contact info</p>
+            </template>
+        </base-layout> 
+
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'baseLayout':{
+                    template:`
+                        <div class="container">
+                            <header>
+                                <slot name="header1"></slot>
+                            </header>
+                            <main>
+                                <slot></slot>
+                            </main>
+                            <footer>
+                                <slot name="footer1"></slot>
+                            </footer>
+                        </div>
+                    `
+                }
+            },
+            data:{
+                dynamicslotname:'header1'
+            }
+        })
+    </script>
+</body>
+</html>

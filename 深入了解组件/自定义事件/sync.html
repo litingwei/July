@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <text-document :title="doc.title" @update:title="doc.title=$event"></text-document>
+        <text-document :title.sync="doc.title2"></text-document>
+        <text-document v-bind.sync="doc"></text-document>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'textDocument':{
+                    props:{
+                        title:String,
+                        age:{
+                            type:Number,
+                            default:18
+                        }
+                    },
+                    template:`
+                        <p @click="$emit('update:title','jack')">
+                            title:{{title}}--age:{{age}}
+                        </p>
+                    `
+                }
+            },
+            data:{
+                doc:{
+                    title:'Tom',
+                    title2:'Bob',
+                    age:25
+                }  
+            }
+        })
+    </script>
+</body>
+</html>

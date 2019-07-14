@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <my-component-name></my-component-name>
+        <my-component-name-second></my-component-name-second>
+
+        <component-a></component-a>
+        <component-b></component-b>
+
+        <component-alice></component-alice>
+        <component-boy></component-boy>
+    </div>
+    <script>
+        Vue.component('my-component-name',{
+            template:`<p>my-component-name-1</p>`
+        })
+        Vue.component('myComponentNameSecond',{
+            template:`<p>my-component-name-Second</p>`
+        })
+        Vue.component('component-a',{
+            template:`<p style="color:red">component-a</p>`
+        })
+        Vue.component('component-b',{
+            template:`<div>
+                <p style="color:blue">component-b</p>
+                <component-a></component-a>
+                <p style="border:1px solid red;width:100px;text-align:center">apple</p>
+                </div>
+            `
+        })
+        var ComponentAlice={
+            template:`<p style="color:green">component-alice</p>`
+        }
+        // 在ComponentBoy中使用ComponentAlice
+        var ComponentBoy={
+            components:{
+                'component-alice':ComponentAlice
+            },
+            template:`<div style="border:1px solid blue;width:200px;text-align:center">
+                <p style="color:#0070ff">component-boy</p>
+                <component-alice></component-alice>
+            </div>
+            `
+        }
+        new Vue({
+            el:'#demo',
+            components:{
+                'component-alice':ComponentAlice,
+                'component-boy':ComponentBoy
+            }
+        })
+    </script>
+</body>
+</html>

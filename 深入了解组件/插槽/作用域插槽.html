@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+    </style>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+        <current-user>
+            <template v-slot:default="slotProps">
+                {{slotProps.user.firstName}}
+            </template>
+            <template v-slot:other="otherSlotProps">
+                {{otherSlotProps.administer.sex}}
+            </template>
+        </current-user>
+        <br>
+        <current-user :company="company">
+        </current-user>
+        <br>
+        <!-- 解构赋值 -->
+        <current-user v-slot="{user}">
+            {{user.age}}
+        </current-user>
+        <br>
+        <current-user v-slot="{user:person}">
+            {{person.sex}}
+        </current-user>
+      
+        <!-- 具名插槽简写 -->
+        <current-user #default="{user}">
+            <span>简写{{user.age}}</span>
+        </current-user>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#demo',
+            components:{
+                'currentUser':{
+                    props:['company'],
+                    data:function(){
+                        return {
+                            user:{
+                                firstName:"Pony",
+                                lastName:"Ma",
+                                age:28,
+                                sex:'male'
+                            },
+                            administer:{
+                                sex:'female'
+                            }
+                        }
+                    },
+                    template:`
+                        <span>
+                            <slot :user="user">
+                                {{user.lastName}}
+                                <strong>{{company}}</strong>
+                            </slot>
+                            <slot :administer="administer" name="other">
+                            </slot>
+                        </span>
+                    `
+                }   
+            },
+            data:{
+                company:'tencent'
+            }
+        })
+    </script>
+</body>
+</html>

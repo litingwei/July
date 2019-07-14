@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span>Message:{{msg}}</span></br>
+        <span v-once>这将不会改变:{{msg}}</span>
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+        <div :id="dynamicId">test-id</div>
+        <button :disabled="isButtonDisabled">Button</button>
+        <p>{{number+1}}</p>
+        <p>{{ok?'Yes':'No'}}</p>
+        <div :id="'list-'+id">second-id</div>
+
+        <!-- 2.6.0新增 -->
+        <div>
+            <a :[attributename]='url'>link</a>
+            <input @[eventname]="doSomething" type="text" value="test">
+            <a :[foo+bar]="value">sec-link</a>
+        </div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                msg:'信息',
+                rawHtml:"<span style='color:red'>This should be red</span>",
+                dynamicId:'new',
+                isButtonDisabled:null,
+                number:10,
+                ok:false,
+                id:'second',
+                attributename:'href',
+                url:'http://www.baidu.com',
+                eventname:'click',
+                foo:'newFoo',
+                bar:'newBar',
+                value:'newValue'
+            },
+            methods:{
+                doSomething:function(){
+                    console.log("focus");
+                }
+            }
+        })
+    </script>
+</body>
+</html>
